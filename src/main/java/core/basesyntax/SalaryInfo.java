@@ -1,6 +1,7 @@
 package core.basesyntax;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class SalaryInfo {
     public String getSalaryInfo(String[] names, String[] data, String dateFrom, String dateTo) {
@@ -18,7 +19,7 @@ public class SalaryInfo {
                     && (localDateTemp.isBefore(localDateTo)
                     || localDateTemp.isEqual(localDateTo))) {
                 for (int j = 0; j < names.length; j++) {
-                    if (names[j].equals(data[i].substring(11, data[i].indexOf(' ',12)))) {
+                    if (names[j].equals(data[i].split(" ")[1])) {
                         salary[j] += getSalary(data[i]);
                     }
                 }
@@ -35,17 +36,15 @@ public class SalaryInfo {
 
     public LocalDate convertToLocalDate(String date) {
 
-        return LocalDate.of(Integer.parseInt(date.substring(6, 10)),
-                Integer.parseInt(date.substring(3,5)),
-                Integer.parseInt(date.substring(0,2)));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return LocalDate.parse(date.split(" ")[0], formatter);
     }
 
     public int getSalary(String data) {
 
-        int indexSecondWhiteSpace = data.indexOf(' ', 11);
-        int indexThirdWhiteSpace = data.indexOf(' ', indexSecondWhiteSpace + 1);
+        int hours = Integer.parseInt(data.split(" ")[2]);
+        int hourlyWage = Integer.parseInt(data.split(" ")[3]);
 
-        return Integer.parseInt(data.substring(indexSecondWhiteSpace + 1, indexThirdWhiteSpace))
-                * Integer.parseInt(data.substring(indexThirdWhiteSpace + 1));
+        return hours * hourlyWage;
     }
 }
