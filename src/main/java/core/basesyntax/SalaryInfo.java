@@ -34,13 +34,13 @@ public class SalaryInfo {
         return result.toString();
     }
 
-    public LocalDate convertToLocalDate(String date) {
+    private LocalDate convertToLocalDate(String date) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         return LocalDate.parse(date.split(" ")[0], formatter);
     }
 
-    public int getSalary(String data) {
+    private int getSalary(String data) {
 
         int hours = Integer.parseInt(data.split(" ")[2]);
         int hourlyWage = Integer.parseInt(data.split(" ")[3]);
